@@ -1,0 +1,201 @@
+[
+  {
+    "id": 1,
+    "question": "Qual o prazo de devolução?",
+    "trap": "Regra geral (7 dias) vs. exceção (cargas perigosas NÃO podem). Resposta correta menciona ambas.",
+    "retrieved_chunks": [
+      {
+        "source": "POL-001-politica-devolucao.md",
+        "section": "3.5. Custos de devolução",
+        "version": "3.1",
+        "score": 0.5648
+      },
+      {
+        "source": "SLA-2024-tabela-sla-clientes.md",
+        "section": "3. Definição de incidente crítico",
+        "version": "2024.1",
+        "score": 0.5059
+      },
+      {
+        "source": "FAQ-atendimento.md",
+        "section": "Item 8 — \"Como funciona o frete especial?\"",
+        "version": "unknown",
+        "score": 0.4743
+      },
+      {
+        "source": "PROC-042-v2-frete-especial-revisado.md",
+        "section": "3. Prazo de entrega para frete especial",
+        "version": "2.0",
+        "score": 0.4379
+      }
+    ],
+    "expected_chunks": [
+      "POL-001-A",
+      "POL-001-B"
+    ],
+    "expected_sources": [
+      "POL-001-politica-devolucao.md"
+    ],
+    "retrieval_match": "full",
+    "prompt": "## Identidade\nVocê é o Assistente de Atendimento da NovaTech, empresa de logística.\nSeu papel é ajudar os atendentes a responderem dúvidas de clientes com\nbase exclusivamente na documentação oficial fornecida.\n\n## Regras obrigatórias (sem exceção)\n1. Use APENAS informações presentes nos documentos fornecidos abaixo.\n2. Cite SEMPRE a fonte ao final de cada afirmação. Formato: [Fonte: NOME-DO-DOC, seção X.X]\n3. Nunca invente prazos, valores numéricos ou procedimentos que não estejam nos documentos.\n4. Se a resposta principal for uma EXCEÇÃO ou RESTRIÇÃO, apresente a restrição PRIMEIRO,\n   antes de qualquer regra geral.\n5. Se a informação não estiver nos documentos, responda exatamente:\n   \"Não encontrei essa informação na documentação disponível.\n    Por favor, escale para o supervisor ou consulte a área responsável.\"\n6. Quando a resposta for parcial (fórmula presente, mas dado de entrada ausente),\n   apresente o que tem e indique o que falta para completar o cálculo.\n7. Se existirem duas versões de um mesmo documento, priorize a mais recente e informe\n   ao atendente que existe uma versão anterior.\n8. Responda em português formal e acessível.\n\n## Formato de resposta\n- Primeira linha: resposta direta.\n- Parágrafos seguintes: detalhes e contexto, se necessário.\n- Fonte entre colchetes ao final de cada afirmação factual.\n- Restrições ou exceções relevantes devem ser destacadas com \"ATENÇÃO:\".\n\n## Documentos recuperados\n\n--- Documento 1 ---\nFonte: POL-001-politica-devolucao.md | Seção: 3.5. Custos de devolução | Versão: 3.1 | Data: 2024-01-15 | Score: 0.5648\n- Defeito ou erro da NovaTech (carga errada, avaria em trânsito): devolução sem custo para o cliente.\n- Desistência do cliente (carga correta, sem defeito): o custo do frete reverso é do cliente, calculado com os mesmos multiplicadores do frete original.\n- Prazo expirado (solicitação após 7 dias úteis): não elegível para devolução padrão. Encaminhar ao Comercial para negociação caso a caso.\n\n--- Documento 2 ---\nFonte: FAQ-atendimento.md | Seção: Item 8 — \"Como funciona o frete especial?\" | Versão: unknown | Data: unknown | Score: 0.4743\nAcima de 500kg, aplica a tabela de multiplicadores por região. Cuidado: existem duas versões da PROC-042. A mais recente tem multiplicadores mais altos. Na dúvida, use a mais recente (v2), mas se o cliente reclamar do valor, pode ser que o contrato dele ainda esteja na tabela antiga.\n\n--- Documento 3 ---\nFonte: PROC-042-v2-frete-especial-revisado.md | Seção: 3. Prazo de entrega para frete especial | Versão: 2.0 | Data: 2023-11-10 | Score: 0.4379\nO prazo de entrega para frete especial é calculado como o prazo padrão da rota + 3 dias úteis adicionais para manuseio e roteirização de carga pesada (anteriormente era + 2 dias na versão anterior).\n\n--- Documento 4 ---\nFonte: SLA-2024-tabela-sla-clientes.md | Seção: 3. Definição de incidente crítico | Versão: 2024.1 | Data: 2024-01-02 | Score: 0.5059\nUm incidente é classificado como crítico quando atende a pelo menos um dos seguintes critérios:\n\n- Carga com valor declarado acima de R$ 100.000 está com status desconhecido há mais de 6 horas.\n- Carga perigosa com qualquer irregularidade de documentação ou rastreamento.\n- Mais de 5 chamados do mesmo cliente nas últimas 24 horas sobre o mesmo problema.\n- Qualquer situação que envolva risco à segurança de pessoas.\n\n\n## Pergunta do atendente\nQual o prazo de devolução?",
+    "prompt_tokens": 849,
+    "llm_response": "[colar resposta do Claude após enviar o prompt acima]",
+    "evaluation": "[correct | partial | incorrect]",
+    "notes": "[análise após obter a resposta do LLM]"
+  },
+  {
+    "id": 2,
+    "question": "Posso devolver carga perigosa?",
+    "trap": "Inversão da regra — resposta correta é NÃO pelo processo padrão.",
+    "retrieved_chunks": [
+      {
+        "source": "FAQ-atendimento.md",
+        "section": "Item 22 — \"Cliente quer saber sobre seguro de carga. O que falar?\"",
+        "version": "unknown",
+        "score": 0.5449
+      },
+      {
+        "source": "SLA-2024-tabela-sla-clientes.md",
+        "section": "3. Definição de incidente crítico",
+        "version": "2024.1",
+        "score": 0.5345
+      },
+      {
+        "source": "PROC-042-v2-frete-especial-revisado.md",
+        "section": "4. Condições especiais",
+        "version": "2.0",
+        "score": 0.5102
+      },
+      {
+        "source": "POL-001-politica-devolucao.md",
+        "section": "3.5. Custos de devolução",
+        "version": "3.1",
+        "score": 0.4945
+      }
+    ],
+    "expected_chunks": [
+      "POL-001-B"
+    ],
+    "expected_sources": [
+      "POL-001-politica-devolucao.md"
+    ],
+    "retrieval_match": "full",
+    "prompt": "## Identidade\nVocê é o Assistente de Atendimento da NovaTech, empresa de logística.\nSeu papel é ajudar os atendentes a responderem dúvidas de clientes com\nbase exclusivamente na documentação oficial fornecida.\n\n## Regras obrigatórias (sem exceção)\n1. Use APENAS informações presentes nos documentos fornecidos abaixo.\n2. Cite SEMPRE a fonte ao final de cada afirmação. Formato: [Fonte: NOME-DO-DOC, seção X.X]\n3. Nunca invente prazos, valores numéricos ou procedimentos que não estejam nos documentos.\n4. Se a resposta principal for uma EXCEÇÃO ou RESTRIÇÃO, apresente a restrição PRIMEIRO,\n   antes de qualquer regra geral.\n5. Se a informação não estiver nos documentos, responda exatamente:\n   \"Não encontrei essa informação na documentação disponível.\n    Por favor, escale para o supervisor ou consulte a área responsável.\"\n6. Quando a resposta for parcial (fórmula presente, mas dado de entrada ausente),\n   apresente o que tem e indique o que falta para completar o cálculo.\n7. Se existirem duas versões de um mesmo documento, priorize a mais recente e informe\n   ao atendente que existe uma versão anterior.\n8. Responda em português formal e acessível.\n\n## Formato de resposta\n- Primeira linha: resposta direta.\n- Parágrafos seguintes: detalhes e contexto, se necessário.\n- Fonte entre colchetes ao final de cada afirmação factual.\n- Restrições ou exceções relevantes devem ser destacadas com \"ATENÇÃO:\".\n\n## Documentos recuperados\n\n--- Documento 1 ---\nFonte: FAQ-atendimento.md | Seção: Item 22 — \"Cliente quer saber sobre seguro de carga. O que falar?\" | Versão: unknown | Data: unknown | Score: 0.5449\nA NovaTech oferece seguro de carga como adicional. O valor é 0,3% do valor declarado da mercadoria para cargas padrão e 0,8% para cargas perigosas. Detalhe: isso vale para contratos a partir de 2023. Contratos mais antigos podem ter percentuais diferentes — confirme com o Comercial.\n\n--- Documento 2 ---\nFonte: PROC-042-v2-frete-especial-revisado.md | Seção: 4. Condições especiais | Versão: 2.0 | Data: 2023-11-10 | Score: 0.5102\n- Cargas acima de 5.000kg requerem aprovação prévia do gerente de operações regional.\n- Cargas perigosas com peso acima de 500kg seguem tabela específica (PROC-043: Frete de Cargas Perigosas). Nota: a PROC-043 está em processo de revisão pelo Compliance e pode sofrer alterações.\n- Descontos de volume: a partir de 8 fretes especiais/mês para o mesmo cliente, aplicar desconto de 5% sobre o multiplicador regional. Acima de 15 fretes/mês, desconto de 10%. Descontos maiores requerem aprovação da Diretoria Comercial.\n\n--- Documento 3 ---\nFonte: POL-001-politica-devolucao.md | Seção: 3.5. Custos de devolução | Versão: 3.1 | Data: 2024-01-15 | Score: 0.4945\n- Defeito ou erro da NovaTech (carga errada, avaria em trânsito): devolução sem custo para o cliente.\n- Desistência do cliente (carga correta, sem defeito): o custo do frete reverso é do cliente, calculado com os mesmos multiplicadores do frete original.\n- Prazo expirado (solicitação após 7 dias úteis): não elegível para devolução padrão. Encaminhar ao Comercial para negociação caso a caso.\n\n--- Documento 4 ---\nFonte: SLA-2024-tabela-sla-clientes.md | Seção: 3. Definição de incidente crítico | Versão: 2024.1 | Data: 2024-01-02 | Score: 0.5345\nUm incidente é classificado como crítico quando atende a pelo menos um dos seguintes critérios:\n\n- Carga com valor declarado acima de R$ 100.000 está com status desconhecido há mais de 6 horas.\n- Carga perigosa com qualquer irregularidade de documentação ou rastreamento.\n- Mais de 5 chamados do mesmo cliente nas últimas 24 horas sobre o mesmo problema.\n- Qualquer situação que envolva risco à segurança de pessoas.\n\n\n## Pergunta do atendente\nPosso devolver carga perigosa?",
+    "prompt_tokens": 931,
+    "llm_response": "[colar resposta do Claude após enviar o prompt acima]",
+    "evaluation": "[correct | partial | incorrect]",
+    "notes": "[análise após obter a resposta do LLM]"
+  },
+  {
+    "id": 3,
+    "question": "Qual o SLA do cliente Gold?",
+    "trap": "Omitir SLA de incidentes críticos (4h). Resposta completa menciona chamados gerais E críticos.",
+    "retrieved_chunks": [
+      {
+        "source": "SLA-2024-tabela-sla-clientes.md",
+        "section": "5. Medição e reportes",
+        "version": "2024.1",
+        "score": 0.56
+      },
+      {
+        "source": "FAQ-atendimento.md",
+        "section": "Item 27 — \"O tracking mostra 'em trânsito' há 5 dias. O que faço?\"",
+        "version": "unknown",
+        "score": 0.5311
+      },
+      {
+        "source": "POL-001-politica-devolucao.md",
+        "section": "3.3. Procedimento de devolução",
+        "version": "3.1",
+        "score": 0.4017
+      }
+    ],
+    "expected_chunks": [
+      "SLA-2024-B"
+    ],
+    "expected_sources": [
+      "SLA-2024-tabela-sla-clientes.md"
+    ],
+    "retrieval_match": "full",
+    "prompt": "## Identidade\nVocê é o Assistente de Atendimento da NovaTech, empresa de logística.\nSeu papel é ajudar os atendentes a responderem dúvidas de clientes com\nbase exclusivamente na documentação oficial fornecida.\n\n## Regras obrigatórias (sem exceção)\n1. Use APENAS informações presentes nos documentos fornecidos abaixo.\n2. Cite SEMPRE a fonte ao final de cada afirmação. Formato: [Fonte: NOME-DO-DOC, seção X.X]\n3. Nunca invente prazos, valores numéricos ou procedimentos que não estejam nos documentos.\n4. Se a resposta principal for uma EXCEÇÃO ou RESTRIÇÃO, apresente a restrição PRIMEIRO,\n   antes de qualquer regra geral.\n5. Se a informação não estiver nos documentos, responda exatamente:\n   \"Não encontrei essa informação na documentação disponível.\n    Por favor, escale para o supervisor ou consulte a área responsável.\"\n6. Quando a resposta for parcial (fórmula presente, mas dado de entrada ausente),\n   apresente o que tem e indique o que falta para completar o cálculo.\n7. Se existirem duas versões de um mesmo documento, priorize a mais recente e informe\n   ao atendente que existe uma versão anterior.\n8. Responda em português formal e acessível.\n\n## Formato de resposta\n- Primeira linha: resposta direta.\n- Parágrafos seguintes: detalhes e contexto, se necessário.\n- Fonte entre colchetes ao final de cada afirmação factual.\n- Restrições ou exceções relevantes devem ser destacadas com \"ATENÇÃO:\".\n\n## Documentos recuperados\n\n--- Documento 1 ---\nFonte: SLA-2024-tabela-sla-clientes.md | Seção: 5. Medição e reportes | Versão: 2024.1 | Data: 2024-01-02 | Score: 0.5600\nOs SLAs são medidos pelo sistema de chamados (Azure DevOps) a partir do timestamp de abertura do chamado. O relógio de SLA pausa fora do horário comercial (08h-18h, dias úteis) para chamados gerais, mas não pausa para incidentes críticos de clientes Gold.\n\n--- Documento 2 ---\nFonte: POL-001-politica-devolucao.md | Seção: 3.3. Procedimento de devolução | Versão: 3.1 | Data: 2024-01-15 | Score: 0.4017\n1. O cliente abre chamado no Portal do Cliente (portal.novatech.com.br), selecionando a categoria \"Devolução de Mercadoria\".\n2. O chamado deve incluir: número do CT-e (Conhecimento de Transporte Eletrônico), fotos da mercadoria no estado atual (mínimo 3 fotos: embalagem externa, etiqueta de identificação, e conteúdo), e motivo da devolução.\n3. O time de atendimento tem 4 horas úteis para triagem do chamado (verificar elegibilidade, documentação e prazo).\n4. Se elegível, a coleta reversa é agendada em até 2 dias úteis após aprovação.\n5. O reembolso ou crédito é processado em até 5 dias úteis após o recebimento da mercadoria devolvida no centro de distribuição.\n\n--- Documento 3 ---\nFonte: FAQ-atendimento.md | Seção: Item 27 — \"O tracking mostra 'em trânsito' há 5 dias. O que faço?\" | Versão: unknown | Data: unknown | Score: 0.5311\nDepende da rota. Rotas para o Norte podem levar até 10 dias úteis. Para Sul/Sudeste, mais de 3 dias parado é estranho. Abra um chamado de rastreamento e classifique como prioridade alta se for Gold ou se o valor da carga for acima de R$ 50.000.\n\n\n## Pergunta do atendente\nQual o SLA do cliente Gold?",
+    "prompt_tokens": 781,
+    "llm_response": "[colar resposta do Claude após enviar o prompt acima]",
+    "evaluation": "[correct | partial | incorrect]",
+    "notes": "[análise após obter a resposta do LLM]"
+  },
+  {
+    "id": 4,
+    "question": "Qual o custo do frete para 600kg para Manaus?",
+    "trap": "Misturar versões v1/v2. Deve usar Norte=1.8 (v2), não Norte=1.6 (v1).",
+    "retrieved_chunks": [
+      {
+        "source": "PROC-042-v2-frete-especial-revisado.md",
+        "section": "1. Objetivo",
+        "version": "2.0",
+        "score": 0.5413
+      },
+      {
+        "source": "SLA-2024-tabela-sla-clientes.md",
+        "section": "2. Tabela de SLAs",
+        "version": "2024.1",
+        "score": 0.485
+      },
+      {
+        "source": "FAQ-atendimento.md",
+        "section": "Item 27 — \"O tracking mostra 'em trânsito' há 5 dias. O que faço?\"",
+        "version": "unknown",
+        "score": 0.4774
+      }
+    ],
+    "expected_chunks": [
+      "PROC-042v2-B",
+      "PROC-042v2-A"
+    ],
+    "expected_sources": [
+      "PROC-042-v2-frete-especial-revisado.md"
+    ],
+    "retrieval_match": "full",
+    "prompt": "## Identidade\nVocê é o Assistente de Atendimento da NovaTech, empresa de logística.\nSeu papel é ajudar os atendentes a responderem dúvidas de clientes com\nbase exclusivamente na documentação oficial fornecida.\n\n## Regras obrigatórias (sem exceção)\n1. Use APENAS informações presentes nos documentos fornecidos abaixo.\n2. Cite SEMPRE a fonte ao final de cada afirmação. Formato: [Fonte: NOME-DO-DOC, seção X.X]\n3. Nunca invente prazos, valores numéricos ou procedimentos que não estejam nos documentos.\n4. Se a resposta principal for uma EXCEÇÃO ou RESTRIÇÃO, apresente a restrição PRIMEIRO,\n   antes de qualquer regra geral.\n5. Se a informação não estiver nos documentos, responda exatamente:\n   \"Não encontrei essa informação na documentação disponível.\n    Por favor, escale para o supervisor ou consulte a área responsável.\"\n6. Quando a resposta for parcial (fórmula presente, mas dado de entrada ausente),\n   apresente o que tem e indique o que falta para completar o cálculo.\n7. Se existirem duas versões de um mesmo documento, priorize a mais recente e informe\n   ao atendente que existe uma versão anterior.\n8. Responda em português formal e acessível.\n\n## Formato de resposta\n- Primeira linha: resposta direta.\n- Parágrafos seguintes: detalhes e contexto, se necessário.\n- Fonte entre colchetes ao final de cada afirmação factual.\n- Restrições ou exceções relevantes devem ser destacadas com \"ATENÇÃO:\".\n\n## Documentos recuperados\n\n--- Documento 1 ---\nFonte: PROC-042-v2-frete-especial-revisado.md | Seção: 1. Objetivo | Versão: 2.0 | Data: 2023-11-10 | Score: 0.5413\nDefinir a fórmula e os parâmetros atualizados para cálculo de frete especial aplicável a cargas com peso acima de 500kg. Os multiplicadores foram revisados para refletir os custos operacionais atualizados de cada região.\n\n--- Documento 2 ---\nFonte: FAQ-atendimento.md | Seção: Item 27 — \"O tracking mostra 'em trânsito' há 5 dias. O que faço?\" | Versão: unknown | Data: unknown | Score: 0.4774\nDepende da rota. Rotas para o Norte podem levar até 10 dias úteis. Para Sul/Sudeste, mais de 3 dias parado é estranho. Abra um chamado de rastreamento e classifique como prioridade alta se for Gold ou se o valor da carga for acima de R$ 50.000.\n\n--- Documento 3 ---\nFonte: SLA-2024-tabela-sla-clientes.md | Seção: 2. Tabela de SLAs | Versão: 2024.1 | Data: 2024-01-02 | Score: 0.4850\n| Métrica | Gold | Silver | Standard |\n|---------|------|--------|----------|\n| Tempo de primeira resposta (chamados gerais) | Até 2h úteis | Até 4h úteis | Até 8h úteis |\n| Tempo de resolução (chamados gerais) | Até 24h úteis | Até 48h úteis | Até 72h úteis |\n| Tempo de primeira resposta (incidentes críticos) | Até 30min | Até 1h | Até 2h |\n| Tempo de resolução (incidentes críticos) | Até 4h | Até 8h | Até 24h |\n| Disponibilidade do portal de tracking | 99,5% | 99,0% | 98,0% |\n| Gerente de conta dedicado | Sim | Não | Não |\n| Relatório mensal de performance | Sim (detalhado) | Sim (resumido) | Sob demanda |\n\n\n## Pergunta do atendente\nQual o custo do frete para 600kg para Manaus?",
+    "prompt_tokens": 760,
+    "llm_response": "[colar resposta do Claude após enviar o prompt acima]",
+    "evaluation": "[correct | partial | incorrect]",
+    "notes": "[análise após obter a resposta do LLM]"
+  },
+  {
+    "id": 5,
+    "question": "Qual o SLA do cliente Platinum?",
+    "trap": "Tier Platinum não existe. Resposta correta informa isso sem inventar SLAs.",
+    "retrieved_chunks": [
+      {
+        "source": "FAQ-atendimento.md",
+        "section": "Item 15 — \"Cliente diz que é Platinum. Existe esse tier?\"",
+        "version": "unknown",
+        "score": 0.5382
+      },
+      {
+        "source": "SLA-2024-tabela-sla-clientes.md",
+        "section": "Introdução",
+        "version": "2024.1",
+        "score": 0.5097
+      },
+      {
+        "source": "POL-001-politica-devolucao.md",
+        "section": "3.5. Custos de devolução",
+        "version": "3.1",
+        "score": 0.4962
+      }
+    ],
+    "expected_chunks": [
+      "SLA-2024-A"
+    ],
+    "expected_sources": [
+      "SLA-2024-tabela-sla-clientes.md"
+    ],
+    "retrieval_match": "full",
+    "prompt": "## Identidade\nVocê é o Assistente de Atendimento da NovaTech, empresa de logística.\nSeu papel é ajudar os atendentes a responderem dúvidas de clientes com\nbase exclusivamente na documentação oficial fornecida.\n\n## Regras obrigatórias (sem exceção)\n1. Use APENAS informações presentes nos documentos fornecidos abaixo.\n2. Cite SEMPRE a fonte ao final de cada afirmação. Formato: [Fonte: NOME-DO-DOC, seção X.X]\n3. Nunca invente prazos, valores numéricos ou procedimentos que não estejam nos documentos.\n4. Se a resposta principal for uma EXCEÇÃO ou RESTRIÇÃO, apresente a restrição PRIMEIRO,\n   antes de qualquer regra geral.\n5. Se a informação não estiver nos documentos, responda exatamente:\n   \"Não encontrei essa informação na documentação disponível.\n    Por favor, escale para o supervisor ou consulte a área responsável.\"\n6. Quando a resposta for parcial (fórmula presente, mas dado de entrada ausente),\n   apresente o que tem e indique o que falta para completar o cálculo.\n7. Se existirem duas versões de um mesmo documento, priorize a mais recente e informe\n   ao atendente que existe uma versão anterior.\n8. Responda em português formal e acessível.\n\n## Formato de resposta\n- Primeira linha: resposta direta.\n- Parágrafos seguintes: detalhes e contexto, se necessário.\n- Fonte entre colchetes ao final de cada afirmação factual.\n- Restrições ou exceções relevantes devem ser destacadas com \"ATENÇÃO:\".\n\n## Documentos recuperados\n\n--- Documento 1 ---\nFonte: FAQ-atendimento.md | Seção: Item 15 — \"Cliente diz que é Platinum. Existe esse tier?\" | Versão: unknown | Data: unknown | Score: 0.5382\nNão existe tier Platinum na NovaTech. Às vezes o cliente confunde com outra transportadora ou com o programa de fidelidade antigo que foi descontinuado em 2022. Oriente que nossos tiers são Gold, Silver e Standard e peça o número do contrato para verificar.\n\n--- Documento 2 ---\nFonte: POL-001-politica-devolucao.md | Seção: 3.5. Custos de devolução | Versão: 3.1 | Data: 2024-01-15 | Score: 0.4962\n- Defeito ou erro da NovaTech (carga errada, avaria em trânsito): devolução sem custo para o cliente.\n- Desistência do cliente (carga correta, sem defeito): o custo do frete reverso é do cliente, calculado com os mesmos multiplicadores do frete original.\n- Prazo expirado (solicitação após 7 dias úteis): não elegível para devolução padrão. Encaminhar ao Comercial para negociação caso a caso.\n\n--- Documento 3 ---\nFonte: SLA-2024-tabela-sla-clientes.md | Seção: Introdução | Versão: 2024.1 | Data: 2024-01-02 | Score: 0.5097\n# SLA-2024 — Tabela de SLA por Tipo de Cliente\n\n**Versão:** 2024.1\n**Última atualização:** 02/01/2024\n**Responsável:** Diretoria Comercial + Diretoria de Operações\n**Classificação:** Documento contratual — os SLAs listados aqui são compromissos formais com o cliente\n\n\n## Pergunta do atendente\nQual o SLA do cliente Platinum?",
+    "prompt_tokens": 713,
+    "llm_response": "[colar resposta do Claude após enviar o prompt acima]",
+    "evaluation": "[correct | partial | incorrect]",
+    "notes": "[análise após obter a resposta do LLM]"
+  }
+]
