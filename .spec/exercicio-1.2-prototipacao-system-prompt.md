@@ -99,7 +99,13 @@ base exclusivamente na documentação oficial fornecida.
 7. Quando existirem duas versões de um mesmo documento nos chunks
    fornecidos, priorize a versão com data mais recente e informe ao
    atendente que existe uma versão anterior.
-8. Responda em português formal e acessível. Evite jargão técnico sem
+8. Ao usar informação de um documento com versão mais recente, deixe
+   explícito no texto qual versão está sendo usada e que existe uma
+   versão anterior com valores diferentes. Use o formato:
+   "Conforme [DOC] v[X] ([mês/ano]) [Fonte: ...]. Nota: existe versão
+   anterior (v[Y]) com valores diferentes — confirme que o contrato do
+   cliente referencia a versão vigente."
+9. Responda em português formal e acessível. Evite jargão técnico sem
    explicação.
 
 ## Formato de resposta
@@ -158,13 +164,33 @@ base exclusivamente na documentação oficial fornecida.
 
 ---
 
+### Pergunta 4: "Qual o multiplicador para a região Norte?" *(teste da Regra 8)*
+
+**Chunks injetados no contexto (ambas as versões):**
+- **Chunk PROC-042-v1 §2.1** — "Multiplicadores regionais: Norte 1.6, Sudeste 1.0, Sul 1.2..."
+- **Chunk PROC-042-v2 §2.1** — "Multiplicadores regionais atualizados (nov/2023): Norte 1.8, Sudeste 1.1..."
+
+**Comportamento esperado com v2:**
+> Conforme PROC-042 v2 (nov/2023), o multiplicador regional para a região Norte é **1.8**.
+> [Fonte: PROC-042-v2-frete-especial-revisado.md, seção 2.1]
+>
+> Nota: existe versão anterior (v1) com multiplicador Norte = 1.6 — confirme que o contrato
+> do cliente referencia a versão vigente antes de calcular.
+
+**Melhoria:** A Regra 8 instrui o modelo a citar a versão explicitamente e alertar sobre a
+existência da versão anterior com valores diferentes. Sem essa regra, o modelo poderia usar
+v2 silenciosamente sem avisar o atendente sobre a discrepância — risco real no contrato
+NovaTech onde v1 e v2 coexistem no SharePoint sem hierarquia formal.
+
+---
+
 ## Análise comparativa v1 vs. v2
 
 | Critério | v1 | v2 |
 |---|---|---|
 | Especificidade das regras | Genérico ("use apenas os documentos") | Regras numeradas e explícitas para cada caso-limite |
-| Tratamento de exceções | Não instruído — modelo decide a ordem | Instrução explícita: restrições primeiro |
+| Tratamento de exceções | Não instruído — modelo decide a ordem | Instrução explícita: restrições primeiro (Regra 4) |
 | Respostas parciais | Risco de alucinação para completar | Regra 6: apresentar o que tem + indicar o que falta |
-| Documentos contraditórios | Não endereçado | Regra 7: priorizar versão mais recente e avisar |
+| Documentos contraditórios | Não endereçado | Regra 7 + 8: priorizar recente, citar versão, alertar sobre anterior |
 | Formato de saída | Livre | Estruturado com "ATENÇÃO:", fontes em colchetes |
-| Fallback (sem resposta) | "diga que não sabe" | Texto exato prescrito para consistência |
+| Fallback (sem resposta) | "diga que não sabe" | Texto exato prescrito para consistência (Regra 5) |

@@ -4,7 +4,7 @@ from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunct
 
 CHROMA_DIR = os.path.join(os.path.dirname(__file__), "chroma_db")
 COLLECTION_NAME = "novatech"
-EMBED_MODEL = "all-MiniLM-L6-v2"
+EMBED_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
 
 
 def _doc_family(source: str) -> str:

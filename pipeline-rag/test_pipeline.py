@@ -9,6 +9,7 @@ TESTS = [
         "question": "Qual o prazo de devolução?",
         "expected_chunks": ["POL-001-A", "POL-001-B"],
         "expected_sources": ["POL-001-politica-devolucao.md"],
+        "expected_sections": ["3.1", "3.2"],
         "trap": "Regra geral (7 dias) vs. exceção (cargas perigosas NÃO podem). Resposta correta menciona ambas.",
     },
     {
@@ -16,6 +17,7 @@ TESTS = [
         "question": "Posso devolver carga perigosa?",
         "expected_chunks": ["POL-001-B"],
         "expected_sources": ["POL-001-politica-devolucao.md"],
+        "expected_sections": ["3.2"],
         "trap": "Inversão da regra — resposta correta é NÃO pelo processo padrão.",
     },
     {
@@ -23,6 +25,7 @@ TESTS = [
         "question": "Qual o SLA do cliente Gold?",
         "expected_chunks": ["SLA-2024-B"],
         "expected_sources": ["SLA-2024-tabela-sla-clientes.md"],
+        "expected_sections": ["2."],
         "trap": "Omitir SLA de incidentes críticos (4h). Resposta completa menciona chamados gerais E críticos.",
     },
     {
@@ -30,24 +33,47 @@ TESTS = [
         "question": "Qual o custo do frete para 600kg para Manaus?",
         "expected_chunks": ["PROC-042v2-B", "PROC-042v2-A"],
         "expected_sources": ["PROC-042-v2-frete-especial-revisado.md"],
+        "expected_sections": ["2.", "2.1"],
         "trap": "Misturar versões v1/v2. Deve usar Norte=1.8 (v2), não Norte=1.6 (v1).",
     },
     {
         "id": 5,
         "question": "Qual o SLA do cliente Platinum?",
         "expected_chunks": ["SLA-2024-A"],
-        "expected_sources": ["SLA-2024-tabela-sla-clientes.md"],
+        "expected_sources": ["SLA-2024-tabela-sla-clientes.md", "FAQ-atendimento.md"],
+        "expected_sections": ["Item 15", "Introdução"],
         "trap": "Tier Platinum não existe. Resposta correta informa isso sem inventar SLAs.",
     },
 ]
 
 
-def evaluate_retrieval(retrieved: list[dict], expected_sources: list[str]) -> str:
+def evaluate_retrieval(
+    retrieved: list[dict],
+    expected_sources: list[str],
+    expected_sections: list[str] | None = None,
+) -> str:
     retrieved_sources = {r["metadata"].get("source", "") for r in retrieved}
-    matches = [s for s in expected_sources if any(s in rs for rs in retrieved_sources)]
-    if len(matches) == len(expected_sources):
+    retrieved_sections = [r["metadata"].get("section", "") for r in retrieved]
+
+    source_matches = [s for s in expected_sources if any(s in rs for rs in retrieved_sources)]
+    source_ok = len(source_matches) == len(expected_sources)
+
+    if expected_sections:
+        section_ok = any(
+            es in sec
+            for sec in retrieved_sections
+            for es in expected_sections
+        )
+    else:
+        section_ok = None
+
+    if source_ok and section_ok:
         return "full"
-    return "partial" if matches else "miss"
+    if source_ok and section_ok is False:
+        return "source_only"
+    if source_matches:
+        return "partial"
+    return "miss"
 
 
 def run_tests(output_path: str = "test_results.json") -> None:
@@ -70,8 +96,8 @@ def run_tests(output_path: str = "test_results.json") -> None:
                 f"{c['metadata']['source']} | {c['metadata']['section']}"
             )
 
-        match = evaluate_retrieval(chunks, test["expected_sources"])
-        symbol = "[OK]" if match == "full" else ("[~]" if match == "partial" else "[X]")
+        match = evaluate_retrieval(chunks, test["expected_sources"], test.get("expected_sections"))
+        symbol = "[OK]" if match == "full" else ("[~]" if match in ("partial", "source_only") else "[X]")
         print(f"  Retrieval vs gabarito: {symbol} {match.upper()}")
 
         prompt = build_prompt(test["question"], chunks)
@@ -93,6 +119,7 @@ def run_tests(output_path: str = "test_results.json") -> None:
             ],
             "expected_chunks": test["expected_chunks"],
             "expected_sources": test["expected_sources"],
+            "expected_sections": test.get("expected_sections", []),
             "retrieval_match": match,
             "prompt": prompt,
             "prompt_tokens": tokens,
