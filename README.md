@@ -50,15 +50,37 @@ testado com 5 perguntas do mapa de cobertura do Anexo B.
 ## Stack do pipeline (Exercício 1.3)
 
 - **Python 3.10+**
-- **ChromaDB** — vector store local
-- **sentence-transformers** (`all-MiniLM-L6-v2`) — embeddings open-source
-- **LLM:** Claude (via chat manual)
+- **ChromaDB** — vector store local persistente
+- **sentence-transformers** (`paraphrase-multilingual-MiniLM-L12-v2`) — embeddings com suporte a PT-BR
+- **LLM:** Claude (prompts gerados pelo pipeline, submetidos manualmente)
 
-## Instalação
+## Como usar
 
 ```bash
+# 1. Instalar dependências
 cd pipeline-rag
 pip install -r requirements.txt
+
+# 2. Indexar os documentos (rodar uma vez, ou ao trocar modelo/docs)
 python ingest.py
+
+# 3. Rodar os 5 testes — gera prompts prontos em test_results.json
 python test_pipeline.py
+
+# 4. Busca avulsa
+python search.py "Qual o prazo de devolução para carga perigosa?"
 ```
+
+Após `test_pipeline.py`, cole cada prompt de `test_results.json` no Claude e
+preencha `llm_response` + `evaluation` + `notes` com os resultados.
+
+## Evidências e avaliação
+
+| Artefato | Descrição |
+|---|---|
+| [evidencias/ex-1.1-iteracao-claude.md](evidencias/ex-1.1-iteracao-claude.md) | Iteração com Claude no exercício 1.1 |
+| [evidencias/ex-1.2-testes-v1-v2.md](evidencias/ex-1.2-testes-v1-v2.md) | Testes do system prompt v1 vs v2 |
+| [evidencias/ex-1.3-claude-code/README.md](evidencias/ex-1.3-claude-code/README.md) | Interações com Claude Code no exercício 1.3 |
+| [evidencias/ex-1.3-melhoria-embedding.md](evidencias/ex-1.3-melhoria-embedding.md) | Before/after da troca do modelo de embedding |
+| [evidencias/ex-1.3-respostas-llm.md](evidencias/ex-1.3-respostas-llm.md) | Ciclo completo: prompts + respostas + avaliação |
+| [evidencias/ex-reavaliacao-pos-melhorias.md](evidencias/ex-reavaliacao-pos-melhorias.md) | Reavaliação com a skill de correção da trilha |
