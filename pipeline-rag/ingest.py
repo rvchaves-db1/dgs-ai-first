@@ -8,7 +8,7 @@ CHROMA_DIR = os.path.join(os.path.dirname(__file__), "chroma_db")
 COLLECTION_NAME = "novatech"
 MAX_CHUNK_TOKENS = 500
 OVERLAP_TOKENS = 50
-EMBED_MODEL = "all-MiniLM-L6-v2"
+EMBED_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
 
 
 def estimate_tokens(text: str) -> int:

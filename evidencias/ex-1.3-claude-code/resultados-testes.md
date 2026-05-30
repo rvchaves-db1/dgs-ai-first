@@ -1,20 +1,39 @@
 # Resultados dos Testes — Exercício 1.3
 
-**Data:** 2026-05-30  
-**Pipeline:** ingest.py + search.py + prompt_builder.py  
-**Modelo de embedding:** all-MiniLM-L6-v2  
+**Data:** 2026-05-30 (atualizado após melhorias pós-avaliação)
+**Pipeline:** ingest.py + search.py + prompt_builder.py
 **Base indexada:** 39 chunks / 5 documentos
 
 ---
 
-## Sumário dos testes
+## Sumário dos testes — v2 (modelo multilingual, métrica com validação de seção)
 
-| # | Pergunta | Match fonte | Seção correta | Prompt (tokens) |
+**Modelo de embedding:** `paraphrase-multilingual-MiniLM-L12-v2`
+**Avaliação:** fonte + seção (antes: apenas fonte)
+
+| # | Pergunta | Retrieval | Seção recuperada (#1) | Prompt (tokens) |
 |---|---|---|---|---|
-| 1 | Qual o prazo de devolução? | FULL | NÃO | ~849 |
-| 2 | Posso devolver carga perigosa? | FULL | NÃO | ~931 |
-| 3 | Qual o SLA do cliente Gold? | FULL | NÃO | ~781 |
-| 4 | Qual o custo do frete para 600kg para Manaus? | FULL | PARCIAL | ~760 |
+| 1 | Qual o prazo de devolução? | **FULL** | POL-001 §3.1 ✓ | ~773 |
+| 2 | Posso devolver carga perigosa? | SOURCE_ONLY | POL-001 §3.5 (errado) | ~954 |
+| 3 | Qual o SLA do cliente Gold? | SOURCE_ONLY | SLA-2024 §1 (errado) | ~968 |
+| 4 | Qual o custo do frete para 600kg para Manaus? | **FULL** | PROC-042-v2 §2 ✓ | ~878 |
+| 5 | Qual o SLA do cliente Platinum? | **FULL** | FAQ Item 15 ✓ | ~890 |
+
+**3/5 FULL — critério ≥3/5 do rubric atingido.**
+
+---
+
+## Sumário dos testes — v1 (modelo original, métrica original — histórico)
+
+**Modelo de embedding:** `all-MiniLM-L6-v2`
+**Avaliação:** apenas fonte (métrica incompleta — reportava FULL falso)
+
+| # | Pergunta | Match fonte (reportado) | Seção correta (real) | Prompt (tokens) |
+|---|---|---|---|---|
+| 1 | Qual o prazo de devolução? | FULL (falso) | NÃO | ~849 |
+| 2 | Posso devolver carga perigosa? | FULL (falso) | NÃO | ~931 |
+| 3 | Qual o SLA do cliente Gold? | FULL (falso) | NÃO | ~781 |
+| 4 | Qual o custo do frete para 600kg para Manaus? | FULL (falso) | PARCIAL | ~760 |
 | 5 | Qual o SLA do cliente Platinum? | FULL | SIM | ~713 |
 
 ---

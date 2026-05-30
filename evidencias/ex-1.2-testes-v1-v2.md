@@ -85,6 +85,56 @@ contexto. Consulte frete-base-AAAAMM.xlsx para o valor final."
 
 ---
 
+---
+
+## Teste adicional — Regra 8: conflito de versões PROC-042 v1 vs v2
+
+*(Adicionado após melhoria pós-avaliação — Melhoria 5)*
+
+**Motivação:** A regra 7 original ("priorize a versão mais recente") era correta mas vaga.
+Não instruía o modelo a explicitar a versão usada nem a mencionar os valores diferentes da
+versão anterior. No cenário NovaTech, PROC-042 v1 e v2 coexistem no SharePoint sem
+hierarquia formal — um atendente usando o valor errado causaria erro de cobrança.
+
+**Regra 8 adicionada ao system prompt v2:**
+```
+8. Ao usar informação de um documento com versão mais recente, deixe
+   explícito no texto qual versão está sendo usada e que existe uma
+   versão anterior com valores diferentes. Use o formato:
+   "Conforme [DOC] v[X] ([mês/ano]) [Fonte: ...]. Nota: existe versão
+   anterior (v[Y]) com valores diferentes — confirme que o contrato do
+   cliente referencia a versão vigente."
+```
+
+**Chunks injetados no contexto:**
+```
+[PROC-042-v1 §2.1] Multiplicadores regionais: Norte 1.6, Nordeste 1.4,
+Centro-Oeste 1.3, Sudeste 1.0, Sul 1.2
+
+[PROC-042-v2 §2.1] Multiplicadores regionais atualizados (novembro/2023):
+Norte 1.8, Nordeste 1.5, Centro-Oeste 1.4, Sudeste 1.1, Sul 1.3
+```
+
+### Pergunta 4: "Qual o multiplicador para a região Norte?"
+
+**Resposta obtida (v2 com Regra 8):**
+> O multiplicador regional para a região **Norte** é **1,8**.
+>
+> Conforme PROC-042-frete-especial-revisado.md v2.0 (novembro/2023)
+> [Fonte: PROC-042-v2-frete-especial-revisado.md, seção 2.1].
+>
+> ATENÇÃO: Existe uma versão anterior deste documento (v1.0, março/2023) que indica o
+> multiplicador **1,6** para a região Norte — valor diferente do atual. Confirme que o
+> contrato do cliente referencia a versão vigente (v2.0) antes de aplicar o multiplicador.
+
+**Avaliação:** CORRETO. O modelo:
+- Usou o valor correto (1.8, versão mais recente)
+- Citou explicitamente a versão e a data
+- Alertou sobre a discrepância com v1 (1.6)
+- Orientou o atendente a confirmar a versão do contrato
+
+---
+
 ## Conclusão da iteração
 
 | Pergunta | v1 | v2 |
@@ -92,5 +142,8 @@ contexto. Consulte frete-base-AAAAMM.xlsx para o valor final."
 | Prazo devolução carga perigosa | Parcial (ambíguo) | Correto |
 | SLA cliente Gold | Parcial (incompleto) | Correto |
 | Frete 600kg Manaus | Correto (por acaso) | Correto (por design) |
+| Multiplicador Norte (v1 vs v2) | Não testado | Correto (Regra 8 — versão explícita + alerta) |
 
 A v2 resolve as falhas da v1 via regras explícitas, não por sorte do modelo.
+A Regra 8 (pós-avaliação) fecha o gap de conflito de versões que a Regra 7 original
+tratava de forma incompleta.
